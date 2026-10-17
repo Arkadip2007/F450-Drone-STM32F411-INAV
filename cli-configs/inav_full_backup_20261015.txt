@@ -1,0 +1,49 @@
+# INAV Full Backup - 15 Oct 2026
+# Board: STM32F411CEU6 Black Pill
+# Quad F450 with MPU6050, BMP280, HMC5883, NEO-6M GPS, FlySky IBUS
+
+batch start
+defaults noreboot
+
+mmix reset
+mmix 0  1.000  1.000  1.000  1.000
+mmix 1  1.000  1.000 -1.000 -1.000
+mmix 2  1.000 -1.000 -1.000  1.000
+mmix 3  1.000 -1.000  1.000 -1.000
+
+feature PWM_OUTPUT_ENABLE
+feature -BLACKBOX
+
+serial 0 2 115200 57600 0 115200
+serial 1 64 115200 57600 0 115200
+serial 30 0 115200 57600 0 115200
+
+aux 0 0 0 1850 2075
+aux 1 1 0 1850 2075
+aux 2 10 1 1800 2100
+
+set gyro_zero_x = 4
+set gyro_zero_y = 22
+set ins_gravity_cmss = 981.947
+set acc_hardware = MPU6050
+set acczero_x = 2
+set acczero_y = -24
+set acczero_z = 41
+set accgain_x = 2048
+set accgain_y = 2047
+set accgain_z = 2027
+set align_mag = CW180
+set mag_hardware = HMC5883
+set maggain_x = 500
+set maggain_y = 444
+set maggain_z = 4096
+set baro_hardware = BMP280
+set motor_pwm_protocol = STANDARD
+set align_board_pitch = 4
+set align_board_yaw = 1800
+set model_preview_type = 3
+set applied_defaults = 1
+
+profile 1
+battery_profile 1
+save

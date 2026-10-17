@@ -1,0 +1,85 @@
+# ==============================================================================
+# INAV 5.1.0 Custom Tuning Preset for F450 Quadcopter
+# Specs:
+#   - Frame: F450 (450mm Wheelbase)
+#   - Motors: 2212 1000KV Brushless
+#   - Propellers: 10x4.5 (1045 Slow-Fly 10 inch)
+#   - Battery: 3S LiPo (11.1V - 12.6V)
+#   - ESC: 30A Standard PWM (Analog)
+#   - FC: STM32F411 Black Pill @ 96MHz
+# ==============================================================================
+
+batch start
+
+# ------------------------------------------------------------------------------
+# 1. MULTIROTOR PID GAINS (Stabilization Loop)
+# Lower P and moderate D to prevent low-frequency wobbles from 10-inch props.
+# ------------------------------------------------------------------------------
+set mc_p_pitch = 34
+set mc_i_pitch = 48
+set mc_d_pitch = 22
+
+set mc_p_roll = 30
+set mc_i_roll = 45
+set mc_d_roll = 20
+
+set mc_p_yaw = 45
+set mc_i_yaw = 55
+set mc_d_yaw = 0
+
+# Angle / Self-Leveling Mode Strength
+set mc_p_level = 22
+set max_angle_inclination_rll = 300
+set max_angle_inclination_pit = 300
+
+# ------------------------------------------------------------------------------
+# 2. GYRO & D-TERM LOW-PASS FILTERS
+# 10-inch props & F450 plastic arms vibrate heavily at 40-70Hz.
+# We lower the filter cutoff to protect motors from heat and jitter.
+# ------------------------------------------------------------------------------
+set gyro_main_lpf_hz = 60
+set gyro_main_lpf_type = PT1
+set dterm_lpf_hz = 50
+set dterm_lpf_type = PT1
+
+# ------------------------------------------------------------------------------
+# 3. THROTTLE & HOVER TUNING (Calculated for F450 + 1000KV on 3S)
+# F450 ~1.1kg hovers at ~45-50% throttle (~1450us).
+# ------------------------------------------------------------------------------
+set nav_mc_hover_thr = 1450
+set throttle_idle = 15
+set min_check = 1050
+set max_check = 1900
+
+# ------------------------------------------------------------------------------
+# 4. NAVIGATION / ALTHOLD / POSHOLD / RTH TUNING
+# Smooth, stable navigation tuned for heavy aerial platform
+# ------------------------------------------------------------------------------
+set nav_mc_pos_z_p = 50
+set nav_mc_vel_z_p = 100
+set nav_mc_vel_z_i = 50
+set nav_mc_vel_z_d = 10
+
+set nav_mc_pos_xy_p = 65
+set nav_mc_vel_xy_p = 40
+set nav_mc_vel_xy_i = 15
+set nav_mc_vel_xy_d = 10
+
+# Safe cruising speeds (3 m/s horizontal, 2 m/s vertical)
+set nav_auto_speed = 300
+set nav_auto_climb_rate = 200
+set nav_rth_altitude = 20
+
+# ------------------------------------------------------------------------------
+# 5. RC RATES & EXPO (Smooth Cinematic / Cruiser Feel)
+# Prevents aggressive twitching on stick inputs.
+# ------------------------------------------------------------------------------
+set roll_rate = 25
+set pitch_rate = 25
+set yaw_rate = 20
+set rc_expo = 25
+set rc_yaw_expo = 20
+set thr_mid = 50
+set thr_expo = 20
+
+save
