@@ -37,13 +37,15 @@
 - [2. Hardware Bill of Materials (BOM)](#2-hardware-bill-of-materials-bom)
 - [3. System Architecture & High-Level Design](#3-system-architecture--high-level-design)
 - [4. Low-Level Pin Mapping & Wiring](#4-low-level-pin-mapping--wiring)
-- [5. Firmware Engineering & The 3 Critical Patches](#5-firmware-engineering--the-3-critical-patches)
-- [6. Master CLI Configuration Script](#6-master-cli-configuration-script)
-- [7. F450 Physics-Calculated PID & Filter Tuning](#7-f450-physics-calculated-pid--filter-tuning)
-- [8. Python Binary Patch Scripts](#8-python-binary-patch-scripts)
-- [9. Diagnostic Knowledge Base & Telemetry Verification](#9-diagnostic-knowledge-base--telemetry-verification)
-- [10. Repository Directory Structure](#10-repository-directory-structure)
-- [11. License & Credits](#11-license--credits)
+- [5. 📸 Configurator & Sensor Visual Verification (Screenshots)](#5--configurator--sensor-visual-verification-screenshots)
+- [6. Firmware Engineering & The 3 Critical Patches](#6-firmware-engineering--the-3-critical-patches)
+- [7. Master CLI Configuration Script](#7-master-cli-configuration-script)
+- [8. F450 Physics-Calculated PID & Filter Tuning](#8-f450-physics-calculated-pid--filter-tuning)
+- [9. Python Binary Patch Scripts](#9-python-binary-patch-scripts)
+- [10. Diagnostic Knowledge Base & Telemetry Verification](#10-diagnostic-knowledge-base--telemetry-verification)
+- [11. 📘 Complete Engineering Q&A Journey](docs/engineering-qa-troubleshooting.md)
+- [12. Repository Directory Structure](#12-repository-directory-structure)
+- [13. License & Credits](#13-license--credits)
 
 ---
 
@@ -179,7 +181,66 @@ flowchart LR
 
 ---
 
-## 5. Firmware Engineering & The 3 Critical Patches
+## 5. 📸 Configurator & Sensor Visual Verification (Screenshots)
+
+To provide 100% visual verification and eliminate ambiguity, here are the actual captures from live bench-tuning sessions with **INAV Configurator** connected to the STM32F411 Black Pill:
+
+### 1. Setup Tab & Real-Time 3D Model Preview
+![INAV Setup Tab](docs/images/inav-setup-3d-model.png)
+
+> **Key Observations in this Screenshot:**
+> - **Top Header Telemetry Status:** `GYRO`, `ACCEL`, `MAG`, `BARO`, and `GPS` indicators are all active and healthy.
+> - **3D Model Tracking:** The Quad-X model tracks gyro/accel rotation without freezing or inverted axes.
+> - **Attitude & Navigation Gauges:** Live heading compass, pitch/roll artificial horizon, and satellite reception active.
+
+---
+
+### 2. 6-Point Accelerometer Calibration
+![INAV 6-Point Calibration](docs/images/inav-calibration-6point.png)
+
+> **Key Observations in this Screenshot:**
+> - Shows INAV's strict 6-step accelerometer orientation calibration (Top, Left, Right, Nose Up, Nose Down, Bottom).
+> - Proper calibration guarantees that automated Return-to-Home and Altitude Hold modes maintain a level hover without spatial drift.
+
+---
+
+### 3. UART & Ports Mapping (GPS & i-BUS)
+![INAV Ports Configuration](docs/images/inav-ports-uart-config.png)
+
+> **Key Observations in this Screenshot:**
+> - **USB VCP:** Configured for MSP telemetry @ 115200 baud for configurator connection.
+> - **UART1 (PA9/PA10):** Dedicated to the u-blox NEO-6M GPS receiver @ 57600 baud.
+> - **UART2 (PA3):** Configured as Serial RX for the FlySky i-BUS receiver with 0 pin collision.
+
+---
+
+### 4. Receiver Channels & Live i-BUS Telemetry
+![INAV Receiver Channels](docs/images/inav-receiver-ibus-channels.png)
+
+> **Key Observations in this Screenshot:**
+> - Real-time channel telemetry across 14 channels (Roll, Pitch, Yaw, Throttle, Aux 1–10).
+> - Shows stick endpoints centered precisely at 1500µs with clean 1000–2000µs throw, validating FlySky AFHDS 2A transmission.
+
+---
+
+### 5. Flight Modes Configuration (ARM, ANGLE & NAV RTH)
+![INAV Flight Modes](docs/images/inav-modes-flight-switches.png)
+
+> **Key Observations in this Screenshot:**
+> - **ARM:** Primary arming switch configured with safety pre-arm checks.
+> - **ANGLE:** Self-leveling stabilized mode for safe manual control.
+> - **NAV RTH (Return to Home):** Dedicated autonomous safety switch that triggers automatic return and landing at 20m altitude.
+
+---
+
+### 6. Hardware Pinout Reference (STM32F411CEU6 Black Pill)
+![Black Pill Pinout](docs/images/stm32f411-blackpill-pinout.png)
+
+> Refer to [docs/wiring-guide.md](docs/wiring-guide.md) and [docs/master-specification.md](docs/master-specification.md) for complete wiring diagrams.
+
+---
+
+## 6. Firmware Engineering & The 3 Critical Patches
 
 ### Patch 1: The MPU-6050 Clone Whitelist (`0x98` WHO_AM_I)
 - **Problem:** Genuine InvenSense MPU-6050 returns `0x68` on WHO_AM_I register `0x75`. Modern Chinese clones return `0x98` (or `0x70`), causing INAV 5.1 stock firmware to fail sensor initialization with `GYRO=NONE, ACC=NONE`.
@@ -206,7 +267,7 @@ flowchart LR
 
 ---
 
-## 6. Master CLI Configuration Script
+## 7. Master CLI Configuration Script
 
 To restore or apply this entire system onto any freshly flashed STM32F411 Black Pill, execute the batch from `cli-configs/inav_full_backup_20261015.txt`:
 
@@ -285,7 +346,7 @@ save
 
 ---
 
-## 7. F450 Physics-Calculated PID & Filter Tuning
+## 8. F450 Physics-Calculated PID & Filter Tuning
 
 1. **Rotational Inertia of 10-inch Propellers:**
    Small 5-inch racing props accelerate/decelerate in milliseconds. In contrast, 10-inch slow-fly propellers (1045) have substantial rotational inertia. If standard high P-gains (45–50) are used, the control loop reacts faster than the props can physically accelerate, leading to low-frequency oscillations ("Death Wobble"). P-gains are lowered to **30–34**.
@@ -296,7 +357,7 @@ save
 
 ---
 
-## 8. Python Binary Patch Scripts
+## 9. Python Binary Patch Scripts
 
 Located in `patch-scripts/`, these standalone Python tools enable binary inspection, symbol discovery, and modification of INAV configurator and firmware files:
 
@@ -312,7 +373,7 @@ Located in `patch-scripts/`, these standalone Python tools enable binary inspect
 
 ---
 
-## 9. Diagnostic Knowledge Base & Telemetry Verification
+## 10. Diagnostic Knowledge Base & Telemetry Verification
 
 ### Telemetry Status Verification
 Executing `status` in the INAV CLI verifies the entire sensor and communication stack:
@@ -327,7 +388,14 @@ Arming disabled flags: CLI
 
 ---
 
-## 10. Repository Directory Structure
+## 11. 📘 Complete Engineering Q&A Journey
+
+For a comprehensive chronological breakdown of every problem faced during the INAV setup, root-cause analyses, and solutions applied, see the dedicated engineering log:
+- **[Complete Engineering Q&A Troubleshooting Guide (INAV)](docs/engineering-qa-troubleshooting.md)**
+
+---
+
+## 12. Repository Directory Structure
 
 ```text
 F450-Drone-STM32F411-INAV/
@@ -364,16 +432,25 @@ F450-Drone-STM32F411-INAV/
 │
 └── docs/
     ├── README.md                            # Technical documentation directory
+    ├── engineering-qa-troubleshooting.md    # Complete Q&A engineering journey & fixes
     ├── master-specification.md              # Master engineering specification
     ├── wiring-and-setup-guide-bn.md         # Comprehensive wiring guide in Bengali (বাংলা)
     ├── wiring-guide.md                      # Complete English wiring guide
     ├── firmware-patches-explained.md        # Deep dive into the 3 firmware patches
-    └── troubleshooting.md                   # Complete troubleshooting knowledge base
+    ├── troubleshooting.md                   # Complete troubleshooting knowledge base
+    └── images/                              # Visual documentation & screenshots
+        ├── README.md                        # Image directory catalog & annotations
+        ├── inav-setup-3d-model.png          # Setup tab 3D model preview
+        ├── inav-calibration-6point.png      # 6-point accelerometer calibration
+        ├── inav-ports-uart-config.png       # UART and Ports mapping
+        ├── inav-receiver-ibus-channels.png  # Receiver live channels monitor
+        ├── inav-modes-flight-switches.png   # Flight modes configuration
+        └── stm32f411-blackpill-pinout.png   # High-res pinout diagram
 ```
 
 ---
 
-## 11. License & Credits
+## 13. License & Credits
 
 - **Project Author:** [Arkadip Mahapatra](https://github.com/Arkadip2007)
 - **Base Flight Firmware:** [INAV Flight Open Source Project](https://github.com/iNavFlight/inav)

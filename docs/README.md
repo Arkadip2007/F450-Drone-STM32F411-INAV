@@ -4,6 +4,8 @@ This directory contains complete documentation, master specifications, wiring ta
 
 ## Documents List
 
+- **`images/`**: High-resolution screenshots of INAV Configurator (Setup, Calibration, Ports, Receiver, Modes) and hardware pinout diagrams.
+- **`engineering-qa-troubleshooting.md`**: Complete chronological Question & Answer engineering journey documenting every technical problem, root-cause diagnosis, and firmware patch from day one.
 - **`master-specification.md`**: Master engineering document detailing full hardware BOM, pinouts, timer mapping, PID tuning math, and bench diagnostics.
 - **`wiring-and-setup-guide-bn.md`**: Complete wiring and flashing guide written in Bengali (বাংলা গাইড) for Bengali-speaking builders.
 - **`wiring-guide.md`**: Pin-to-pin wiring reference for I2C sensors, GPS, receiver, and ESCs in English.
