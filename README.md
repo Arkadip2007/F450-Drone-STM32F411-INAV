@@ -181,11 +181,13 @@ flowchart LR
 
 ---
 
-## 5. 📸 Configurator & Sensor Visual Verification (Screenshots)
+## 5. 📸 Configurator & Physical Hardware Visual Tour
 
-To provide 100% visual verification and eliminate ambiguity, here are the actual captures from live bench-tuning sessions with **INAV Configurator** connected to the STM32F411 Black Pill:
+To provide complete end-to-end transparency, here are the actual captures from live bench-tuning sessions with **INAV Configurator**, along with physical photos of the custom flight controller assembly and drone hardware:
 
-### 1. Setup Tab & Real-Time 3D Model Preview
+### Part A: INAV Configurator Telemetry & Navigation
+
+#### 1. Setup Tab & Real-Time 3D Model Preview
 ![INAV Setup Tab](docs/images/inav-setup-3d-model.png)
 
 > **Key Observations in this Screenshot:**
@@ -195,7 +197,7 @@ To provide 100% visual verification and eliminate ambiguity, here are the actual
 
 ---
 
-### 2. 6-Point Accelerometer Calibration
+#### 2. 6-Point Accelerometer Calibration
 ![INAV 6-Point Calibration](docs/images/inav-calibration-6point.png)
 
 > **Key Observations in this Screenshot:**
@@ -204,7 +206,7 @@ To provide 100% visual verification and eliminate ambiguity, here are the actual
 
 ---
 
-### 3. UART & Ports Mapping (GPS & i-BUS)
+#### 3. UART & Ports Mapping (GPS & i-BUS)
 ![INAV Ports Configuration](docs/images/inav-ports-uart-config.png)
 
 > **Key Observations in this Screenshot:**
@@ -214,7 +216,7 @@ To provide 100% visual verification and eliminate ambiguity, here are the actual
 
 ---
 
-### 4. Receiver Channels & Live i-BUS Telemetry
+#### 4. Receiver Channels & Live i-BUS Telemetry
 ![INAV Receiver Channels](docs/images/inav-receiver-ibus-channels.png)
 
 > **Key Observations in this Screenshot:**
@@ -223,7 +225,7 @@ To provide 100% visual verification and eliminate ambiguity, here are the actual
 
 ---
 
-### 5. Flight Modes Configuration (ARM, ANGLE & NAV RTH)
+#### 5. Flight Modes Configuration (ARM, ANGLE & NAV RTH)
 ![INAV Flight Modes](docs/images/inav-modes-flight-switches.png)
 
 > **Key Observations in this Screenshot:**
@@ -233,7 +235,54 @@ To provide 100% visual verification and eliminate ambiguity, here are the actual
 
 ---
 
-### 6. Hardware Pinout Reference (STM32F411CEU6 Black Pill)
+### Part B: Physical Drone Build & Bench Hardware Gallery
+
+#### 6. Complete Bench Testing & INAV Configurator Setup
+![Drone Bench Setup](docs/images/drone-bench-setup-laptop.jpg)
+
+> **Physical Bench Setup:** The complete F450 quadcopter connected to laptop workstation via USB for live sensor calibration, motor direction verification, and radio receiver telemetry matching.
+
+---
+
+#### 7. Custom DIY STM32F411 Flight Controller Board (Top View)
+![STM32F411 FC Board](docs/images/stm32f411-flight-controller-board-top.jpg)
+
+> **Flight Controller Architecture:** Custom-soldered perfboard integrating the STM32F411CEU6 Black Pill (center), MPU-6050 6-DOF IMU, BMP280 barometer, GY-271 compass, and u-blox NEO-6M GPS module.
+
+---
+
+#### 8. Flight Controller Installed on Frame with Active Power
+![FC Installed on Frame](docs/images/stm32f411-fc-installed-wiring.jpg)
+
+> **Installed System:** The flight controller mounted onto the central fiberglass plate of the F450 airframe, powered via ESC 5V BEC with status LEDs illuminated, verifying active sensor bus communication.
+
+---
+
+#### 9. F450 Quadcopter Airframe Assembly
+![F450 Frame](docs/images/f450-frame-assembly.jpg)
+
+> **Airframe:** Standard 450mm diagonal wheelbase frame featuring high-strength polyamide arms and integrated power distribution board plates.
+
+---
+
+#### 10. All-Up-Weight (AUW) Measurement
+![Drone Weight on Scale](docs/images/f450-drone-weight-scale.jpg)
+
+> **Flight Weight Validation:** The complete F450 drone weighed on a precision digital scale with battery and 1045 propellers (~1.1 kg), validating the calculated ~2.5:1 thrust-to-weight ratio for stable autonomous hover and RTH climb rates.
+
+---
+
+#### 11. Radio Control System & Transmitter Power Mod
+| FlySky FS-i6 Transmitter | Internal Power Supply Mod |
+| :---: | :---: |
+| ![FlySky Transmitter](docs/images/flysky-fs-i6-transmitter.jpg) | ![Transmitter Mod](docs/images/flysky-transmitter-power-supply-mod.jpg) |
+| Mode 2 FlySky FS-i6 2.4GHz Transmitter | <u>*Updated power supply with rechargeable lithium-ion battery mod for extended field endurance.*</u> |
+
+---
+
+### Part C: Pinout Reference Diagram
+
+#### 12. Hardware Pinout Reference (STM32F411CEU6 Black Pill)
 ![Black Pill Pinout](docs/images/stm32f411-blackpill-pinout.png)
 
 > Refer to [docs/wiring-guide.md](docs/wiring-guide.md) and [docs/master-specification.md](docs/master-specification.md) for complete wiring diagrams.
@@ -438,13 +487,20 @@ F450-Drone-STM32F411-INAV/
     ├── wiring-guide.md                      # Complete English wiring guide
     ├── firmware-patches-explained.md        # Deep dive into the 3 firmware patches
     ├── troubleshooting.md                   # Complete troubleshooting knowledge base
-    └── images/                              # Visual documentation & screenshots
+    └── images/                              # Visual documentation, telemetry & photos
         ├── README.md                        # Image directory catalog & annotations
         ├── inav-setup-3d-model.png          # Setup tab 3D model preview
         ├── inav-calibration-6point.png      # 6-point accelerometer calibration
         ├── inav-ports-uart-config.png       # UART and Ports mapping
         ├── inav-receiver-ibus-channels.png  # Receiver live channels monitor
         ├── inav-modes-flight-switches.png   # Flight modes configuration
+        ├── drone-bench-setup-laptop.jpg     # Complete bench testing setup with laptop
+        ├── stm32f411-flight-controller-board-top.jpg # Custom FC perfboard close-up
+        ├── stm32f411-fc-installed-wiring.jpg # FC mounted on frame with active LEDs
+        ├── f450-frame-assembly.jpg          # Assembled F450 airframe
+        ├── f450-drone-weight-scale.jpg      # AUW scale measurement (~1.1 kg)
+        ├── flysky-fs-i6-transmitter.jpg     # FlySky FS-i6 radio transmitter
+        ├── flysky-transmitter-power-supply-mod.jpg # Lithium-ion battery mod for transmitter
         └── stm32f411-blackpill-pinout.png   # High-res pinout diagram
 ```
 
