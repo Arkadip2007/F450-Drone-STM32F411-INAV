@@ -237,55 +237,49 @@ To provide complete end-to-end transparency, here are the actual captures from l
 
 ### Part B: Physical Drone Build & Bench Hardware Gallery
 
-#### 6. Complete Bench Testing & INAV Configurator Setup
-![Drone Bench Setup](docs/images/drone-bench-setup-laptop.jpg)
-
-> **Physical Bench Setup:** The complete F450 quadcopter connected to laptop workstation via USB for live sensor calibration, motor direction verification, and radio receiver telemetry matching.
-
----
-
-#### 7. Custom DIY STM32F411 Flight Controller Board (Top View)
-![STM32F411 FC Board](docs/images/stm32f411-flight-controller-board-top.jpg)
-
-> **Flight Controller Architecture:** Custom-soldered perfboard integrating the STM32F411CEU6 Black Pill (center), MPU-6050 6-DOF IMU, BMP280 barometer, GY-271 compass, and u-blox NEO-6M GPS module.
+#### 6. Airframe Assembly & Electronics Installation
+| F450 Airframe Structure | Flight Controller Mounted & Powered |
+| :---: | :---: |
+| ![F450 Frame](docs/images/f450-frame-assembly.jpg) | ![FC Installed on Frame](docs/images/stm32f411-fc-installed-wiring.jpg) |
+| Standard 450mm wheelbase airframe with polyamide arms and integrated PDB. | Custom flight controller installed on the central plate, powered via 5V BEC with active status LEDs. |
 
 ---
 
-#### 8. DIY Hand-Built Flight Controller Perfboard Reference (Front & Back Layout)
+#### 7. Custom Flight Controller & Bench-Testing Setup
+| STM32F411 FC Board (Top View) | Workstation Live Sensor Calibration |
+| :---: | :---: |
+| ![STM32F411 FC Board](docs/images/stm32f411-flight-controller-board-top.jpg) | ![Drone Bench Setup](docs/images/drone-bench-setup-laptop.jpg) |
+| Hand-soldered perfboard integrating Black Pill MCU, MPU-6050, BMP280, GY-271, and NEO-6M GPS. | Quadcopter connected via USB to laptop for live sensor calibration, compass orientation, and GPS satellite fix. |
+
+---
+
+#### 8. DIY Perfboard Wiring Blueprint (Top Layout & Bottom Solder Traces)
 | Top Component Side & Pin Layout | Bottom Solder Traces & Jumper Routing |
 | :---: | :---: |
 | ![Top Component Layout](docs/images/diy-perfboard-fc-top-component-layout.jpg) | ![Bottom Solder Wiring](docs/images/diy-perfboard-fc-bottom-solder-wiring.jpg) |
-| **Top Side:** Female header sockets for STM32F411 Black Pill, sensor breakout headers (MPU-6050, BMP280, GY-271, NEO-6M GPS), filtering capacitors, and 5V/3.3V power rails. | **Bottom Side:** Point-to-point hand-soldered copper wiring bridges, insulated jumper routing, and unified ground bus. |
+| Female header sockets for Black Pill MCU, sensor breakout headers, filtering capacitors, and power rails. | Point-to-point hand-soldered copper wiring bridges, insulated jumper routing, and ground bus. |
 
 > **💡 Low-Cost Prototyping & EDA Reference:**
-> Ordering factory-fabricated multi-layer PCBs can be cost-prohibitive for students, hobbyists, and makers on a tight budget. This flight controller board was **100% handcrafted on standard copper perfboard (zero-cost prototyping)** at home.
-> - **DIY Home Replication:** Anyone can directly use these top-side component placements and bottom-side solder paths as a visual blueprint to wire their own autonomous flight controller using simple perfboard and a soldering iron.
-> - **EDA Simulation & PCB Design:** These physical layout images provide a practical real-world reference for anyone designing an optimized schematic or PCB in software (such as KiCad, EasyEDA, or Altium) or running SPICE simulations prior to manufacturing.
+> For anyone building this flight controller on perfboard at home or creating a custom PCB design and simulation in KiCad or EasyEDA, these top and bottom layouts serve as a practical visual blueprint.
 
 ---
 
-#### 9. Flight Controller Installed on Frame with Active Power
-![FC Installed on Frame](docs/images/stm32f411-fc-installed-wiring.jpg)
-
-> **Installed System:** The flight controller mounted onto the central fiberglass plate of the F450 airframe, powered via ESC 5V BEC with status LEDs illuminated, verifying active sensor bus communication.
-
----
-
-#### 10. F450 Quadcopter Airframe Assembly
-![F450 Frame](docs/images/f450-frame-assembly.jpg)
-
-> **Airframe:** Standard 450mm diagonal wheelbase frame featuring high-strength polyamide arms and integrated power distribution board plates.
+#### 9. Hands-On Assembly & Initial Bench Testing
+| Hand-Soldering & Continuity Testing | Firmware Flashing & Diagnostics |
+| :---: | :---: |
+| ![Hand-Soldering & Continuity Testing](docs/images/author-hardware-assembly-hand-soldering.jpg) | ![Firmware Flashing & Diagnostics](docs/images/author-workstation-bench-testing.jpg) |
+| Assembling the perfboard and testing continuity with a digital multimeter. | Initial board bring-up, flashing firmware over USB, and checking sensor telemetry. |
 
 ---
 
-#### 11. All-Up-Weight (AUW) Measurement
+#### 10. All-Up-Weight (AUW) Measurement
 ![Drone Weight on Scale](docs/images/f450-drone-weight-scale.jpg)
 
 > **Flight Weight Validation:** The complete F450 drone weighed on a precision digital scale with battery and 1045 propellers (~1.1 kg), validating the calculated ~2.5:1 thrust-to-weight ratio for stable autonomous hover and RTH climb rates.
 
 ---
 
-#### 12. Radio Control System & Transmitter Power Mod
+#### 11. Radio Control System & Transmitter Power Mod
 | FlySky FS-i6 Transmitter | Internal Power Supply Mod |
 | :---: | :---: |
 | ![FlySky Transmitter](docs/images/flysky-fs-i6-transmitter.jpg) | ![Transmitter Mod](docs/images/flysky-transmitter-power-supply-mod.jpg) |
@@ -293,20 +287,9 @@ To provide complete end-to-end transparency, here are the actual captures from l
 
 ---
 
-#### 13. Author Proof of Work & Active Development (Hand-Built from Scratch)
-| Hardware Assembly & Hand-Soldering | Workstation Flashing & Diagnostic Testing |
-| :---: | :---: |
-| ![Hardware Assembly & Hand-Soldering](docs/images/author-hardware-assembly-hand-soldering.jpg) | ![Workstation Flashing & Diagnostic Testing](docs/images/author-workstation-bench-testing.jpg) |
-| **Author (Arkadip Mahapatra)** assembling, hand-soldering, and checking continuity with a digital multimeter on the workshop floor. | Bench-testing, firmware flashing, and hardware-in-the-loop validation at the computer workstation. |
-
-> **🛠️ 100% Independent DIY Proof-of-Work:**
-> Every single stage of this project — point-to-point perfboard soldering, custom pin remapping, sensor bus debugging, firmware binary patching, and flight tuning — was designed, assembled, and validated **end-to-end by the author at home** without third-party assistance or commercial pre-built flight controller boards.
-
----
-
 ### Part C: Pinout Reference Diagram
 
-#### 14. Hardware Pinout Reference (STM32F411CEU6 Black Pill)
+#### 12. Hardware Pinout Reference (STM32F411CEU6 Black Pill)
 ![Black Pill Pinout](docs/images/stm32f411-blackpill-pinout.png)
 
 > Refer to [docs/wiring-guide.md](docs/wiring-guide.md) and [docs/master-specification.md](docs/master-specification.md) for complete wiring diagrams.
